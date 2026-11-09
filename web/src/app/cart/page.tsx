@@ -96,7 +96,7 @@ export default function CartPage() {
   }
 
   return (
-    <main>
+    <div>
       <div
         style={{
           display: "flex",
@@ -311,6 +311,6 @@ export default function CartPage() {
           }
         }
       `}</style>
-    </main>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/lib/api";
+import { Product, formatPrice, formatCheckedAt } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
 import { useState } from "react";
 
@@ -73,11 +73,25 @@ export function ProductCard({
           )}
         </div>
 
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {p.retailer_domain && (
+            <span className="agora-chip" title="Retailer for this listing">{p.retailer_domain}</span>
+          )}
+          {p.availability === "InStock" && (
+            <span
+              className="agora-chip agora-chip--ok"
+              title="Based on the latest catalog response, not live checkout inventory"
+            >
+              In stock{formatCheckedAt(p.stock_checked_at) ? ` as of ${formatCheckedAt(p.stock_checked_at)}` : ""}
+            </span>
+          )}
+        </div>
+
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "auto" }}>
           <div style={{ fontWeight: 700, fontSize: 15, color: "rgb(var(--text))" }}>
-            {p.price != null ? `${p.price} ${p.currency ?? "USD"}` : "—"}
+            {formatPrice(p.price, p.currency)}
           </div>
-          <Button onClick={() => onAdd(p)} disabled={!!disabled} size="sm">
+          <Button onClick={() => onAdd(p)} disabled={!!disabled} size="sm" aria-label={`Add ${p.title} to cart`}>
             Add to cart
           </Button>
         </div>
@@ -86,6 +100,7 @@ export function ProductCard({
           href={p.product_url}
           target="_blank"
           rel="noreferrer"
+          aria-label={`View ${p.title} on ${p.retailer_domain ?? "retailer site"} (opens in new tab)`}
           style={{
             fontSize: 12,
             color: "rgb(var(--primary-light, 129 140 248))",

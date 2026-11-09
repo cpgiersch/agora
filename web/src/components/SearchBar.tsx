@@ -42,6 +42,7 @@ export function SearchBar({
               if (e.key === "Enter") onSearch();
             }}
             placeholder='Search products (e.g. "running shoes")'
+            aria-label="Search products"
             style={{ paddingRight: 52 }}
           />
 
@@ -89,10 +90,11 @@ export function SearchBar({
         <div style={{ width: 110, flexShrink: 0 }}>
           <Input
             type="number"
+            aria-label="Number of results (1 to 30)"
             min={1}
             max={30}
             value={limit}
-            onChange={(e) => setLimit(Number(e.target.value) || 12)}
+            onChange={(e) => setLimit(Math.min(30, Math.max(1, Number(e.target.value) || 12)))}
           />
         </div>
 
@@ -104,6 +106,7 @@ export function SearchBar({
 
       {error && (
         <div
+          role="alert"
           style={{
             marginTop: 12,
             padding: "12px 16px",

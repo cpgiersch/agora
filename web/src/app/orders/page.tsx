@@ -77,7 +77,7 @@ export default function OrdersPage() {
   }, [sessionId]);
 
   return (
-    <main>
+    <div>
       <div
         style={{
           display: "flex",
@@ -245,6 +245,6 @@ export default function OrdersPage() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

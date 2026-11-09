@@ -57,6 +57,7 @@ export function NavBar({ cartCount = 0 }: NavBarProps) {
       }}
     >
       <div
+        className="agora-nav-inner"
         style={{
           maxWidth: 1280,
           margin: "0 auto",

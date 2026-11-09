@@ -15,7 +15,44 @@ export type Product = {
   currency?: string | null;
   image_url?: string | null;
   product_url: string;
+  retailer_domain?: string | null;
+  availability?: "InStock" | string | null;
+  stock_checked_at?: string | null;
 };
+
+export type SearchResponse = {
+  query: string;
+  limit: number;
+  results: Product[];
+  scanned_count: number;
+  excluded_retailer_count: number;
+  excluded_stock_count: number;
+  blocked_domains: string[];
+  checked_at: string;
+  next_page_token: string | null;
+};
+
+export type ProductPolicy = {
+  blocked_domains: string[];
+  explanation: string;
+};
+
+export function formatPrice(price?: number | null, currency?: string | null): string {
+  if (price == null || !Number.isFinite(price)) return "Price unavailable";
+  const cur = (currency || "USD").toUpperCase();
+  try {
+    return new Intl.NumberFormat(undefined, { style: "currency", currency: cur }).format(price);
+  } catch {
+    return `${price.toFixed(2)} ${cur}`;
+  }
+}
+
+export function formatCheckedAt(iso?: string | null): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+}
 
 export async function apiGet<T>(
   path: string,

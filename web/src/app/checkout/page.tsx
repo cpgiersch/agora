@@ -143,7 +143,7 @@ export default function CheckoutPage() {
   const hasItems = (cart?.items?.length ?? 0) > 0;
 
   return (
-    <main>
+    <div>
       <div
         style={{
           display: "flex",
@@ -357,6 +357,6 @@ export default function CheckoutPage() {
           }
         }
       `}</style>
-    </main>
+    </div>
   );
 }
